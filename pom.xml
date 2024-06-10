@@ -6,7 +6,7 @@
 
     <groupId>com.wjw.wjwliving</groupId>
     <artifactId>wjwliving</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
 
     <name>wjwliving</name>
     <description>wjw-(家居生活)-集成聚合微服务模块</description>
@@ -22,8 +22,8 @@
     <modules>
         <module>wjwliving-commodity</module>
         <module>renren-fast</module>
-<!--        <module>renren-generator</module>-->
-<!--        <module>wjwliving-common</module>-->
+        <module>renren-generator</module>
+        <module>wjwliving-common</module>
 <!--        <module>wjwliving-service</module>-->
 <!--        <module>wjwliving-gateway</module>-->
     </modules>

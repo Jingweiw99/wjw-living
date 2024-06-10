@@ -3,8 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/renren-fast/renren-fast.iml" filepath="$PROJECT_DIR$/renren-fast/renren-fast.iml" />
+      <module fileurl="file://$PROJECT_DIR$/renren-generator/renren-generator.iml" filepath="$PROJECT_DIR$/renren-generator/renren-generator.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/wjw-living.iml" filepath="$PROJECT_DIR$/.idea/wjw-living.iml" />
       <module fileurl="file://$PROJECT_DIR$/wjwliving-commodity/wjwliving-commodity.iml" filepath="$PROJECT_DIR$/wjwliving-commodity/wjwliving-commodity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wjwliving-common/wjwliving-common.iml" filepath="$PROJECT_DIR$/wjwliving-common/wjwliving-common.iml" />
     </modules>
   </component>
 </project>
