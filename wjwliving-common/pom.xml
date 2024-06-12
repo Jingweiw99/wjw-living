@@ -29,13 +29,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.8</version>
         </dependency>
-        <!-- 这是 hspliving-common 需要的依赖 -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
             <version>4.4.12</version>
         </dependency>
-        <!-- 这是 hspliving-common 需要的依赖, 从 renren-generator 拷贝即可,指定 version -->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
