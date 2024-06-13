@@ -1,0 +1,6 @@
+.idea
+*.iml
+/**/target
+logs
+wjwliving-service/src/main/resources/application.yml
+wjwliving-commodity/src/main/resources/application.yml
