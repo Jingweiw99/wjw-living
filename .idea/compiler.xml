@@ -10,6 +10,7 @@
         <module name="renren-fast" />
         <module name="wjwliving-commodity" />
         <module name="wjwliving-common" />
+        <module name="wjwliving-service" />
         <module name="renren-generator" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="wjw-living" target="8" />
       <module name="wjwliving-commodity" target="1.8" />
       <module name="wjwliving-common" target="8" />
+      <module name="wjwliving-service" target="8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -26,6 +28,7 @@
       <module name="renren-fast" options="-parameters" />
       <module name="renren-generator" options="-parameters" />
       <module name="wjwliving-commodity" options="-parameters" />
+      <module name="wjwliving-service" options="-parameters" />
     </option>
   </component>
 </project>
