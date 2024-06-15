@@ -25,8 +25,7 @@
         <module>renren-generator</module>
         <module>wjwliving-common</module>
         <module>wjwliving-service</module>
-        <!--        <module>wjwliving-service</module>-->
-<!--        <module>wjwliving-gateway</module>-->
+        <module>wjwliving-gateway</module>
     </modules>
 
 </project>
