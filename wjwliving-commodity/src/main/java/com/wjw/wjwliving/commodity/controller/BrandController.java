@@ -6,6 +6,9 @@ import java.util.Map;
 
 import com.wjw.utils.PageUtils;
 import com.wjw.utils.R;
+import com.wjw.valid.SaveGroup;
+import com.wjw.valid.UpdateGroup;
+import com.wjw.valid.UpdateIsShowGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -80,7 +83,7 @@ public class BrandController {
 //    }
     @RequestMapping("/save")
 //    @RequiresPermissions("commodity:brand:save")
-    public R save(@Validated @RequestBody BrandEntity brand) {
+    public R save(@Validated({SaveGroup.class}) @RequestBody BrandEntity brand) {
         brandService.save(brand);
         return R.ok();
     }
@@ -90,9 +93,18 @@ public class BrandController {
      */
     @RequestMapping("/update")
 //    @RequiresPermissions("commodity:brand:update")
-    public R update(@RequestBody BrandEntity brand) {
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
         brandService.updateById(brand);
 
+        return R.ok();
+    }
+
+    /**
+     * 修改isshow，前端传{id,isshow}
+     */
+    @RequestMapping("/update/isshow")
+    public R updateIsShow(@Validated({UpdateIsShowGroup.class}) @RequestBody BrandEntity brand) {
+        brandService.updateById(brand);
         return R.ok();
     }
 
