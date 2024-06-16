@@ -1,5 +1,6 @@
 package com.wjw.wjwliving.commodity.exception;
 
+import com.wjw.constant.WjwlivingCodeEnum;
 import com.wjw.utils.R;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,13 +26,13 @@ public class WjwlivingExceptionControllerAdvice {
             String message = fieldError.getDefaultMessage();
             map.put(field, message);
         });
-        return R.error(400, "表单字段输入有误！").put("data", map);
+        return R.error(WjwlivingCodeEnum.INVALID_EXCEPTION.getCode(), WjwlivingCodeEnum.INVALID_EXCEPTION.getMsg()).put("data", map);
     }
     /**
      * 没有精确匹配到的异常, 走这里
      */
     @ExceptionHandler(value = Throwable.class)
     public R handleException(Throwable throwable){
-        return R.error(40000,"系统未知错误");
+        return R.error(WjwlivingCodeEnum.UNKNOWN_EXCEPTION.getCode(), WjwlivingCodeEnum.UNKNOWN_EXCEPTION.getMsg());
     }
 }
