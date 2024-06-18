@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.wjw.utils.PageUtils;
 import com.wjw.utils.R;
+import com.wjw.wjwliving.commodity.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,8 @@ import com.wjw.wjwliving.commodity.service.AttrgroupService;
 public class AttrgroupController {
     @Autowired
     private AttrgroupService attrgroupService;
-
+    @Autowired
+    private CategoryService categoryService;
     /**
      * 列表
      */
@@ -60,7 +62,10 @@ public class AttrgroupController {
 //    @RequiresPermissions("commodity:attrgroup:info")
     public R info(@PathVariable("id") Long id) {
         AttrgroupEntity attrgroup = attrgroupService.getById(id);
-
+        // 获取改属性分组对应的categoryId
+        Long categoryId = attrgroup.getCategoryId();
+        Long[] cascadedCategoryId = categoryService.getCascadedCategoryId(categoryId);
+        attrgroup.setCascadedCategoryId(cascadedCategoryId);
         return R.ok().put("attrgroup", attrgroup);
     }
 

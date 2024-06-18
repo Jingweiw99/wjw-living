@@ -21,5 +21,7 @@ public interface CategoryService extends IService<CategoryEntity> {
     List<CategoryEntity> listTree();
 
     PageUtils queryPage(Map<String, Object> params);
+    // 获取三级分类的级联id
+    Long[] getCascadedCategoryId(Long categoryId);
 }
 
