@@ -20,5 +20,8 @@ public interface AttrService extends IService<AttrEntity> {
     void saveAttrAndRelation(AttrEntity attr);
 
     PageUtils queryBaseAttrPage(Map<String, Object> params, Long categoryId);
+
+
+    AttrEntity getByIdWithExInfo(Long attrId);
 }
 

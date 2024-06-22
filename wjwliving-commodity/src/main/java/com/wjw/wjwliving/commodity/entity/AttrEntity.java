@@ -60,6 +60,11 @@ public class AttrEntity implements Serializable {
 	@TableField(exist = false)
 	private Long attrGroupId;
 	/**
+	 * 三级级联的分类数组
+	 */
+	@TableField(exist = false)
+	private Long[] cascadedCategoryId;
+	/**
 	 * 快速展示[是否展示在介绍上: 0-否 1-是]
 	 */
 	private Integer showDesc;

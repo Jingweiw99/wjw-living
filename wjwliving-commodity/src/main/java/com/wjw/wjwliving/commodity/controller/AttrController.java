@@ -58,8 +58,9 @@ public class AttrController {
     @RequestMapping("/info/{attrId}")
 //    @RequiresPermissions("commodity:attr:info")
     public R info(@PathVariable("attrId") Long attrId){
-		AttrEntity attr = attrService.getById(attrId);
-
+//		AttrEntity attr = attrService.getById(attrId);
+        // 带有 attrGroupId cascadedCategoryId
+        AttrEntity attr = attrService.getByIdWithExInfo(attrId);
         return R.ok().put("attr", attr);
     }
 

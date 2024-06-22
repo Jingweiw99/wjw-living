@@ -4,7 +4,10 @@ import com.wjw.utils.PageUtils;
 import com.wjw.utils.Query;
 import com.wjw.wjwliving.commodity.dao.AttrAttrgroupRelationDao;
 import com.wjw.wjwliving.commodity.entity.AttrAttrgroupRelationEntity;
+import com.wjw.wjwliving.commodity.service.AttrAttrgroupRelationService;
+import com.wjw.wjwliving.commodity.service.CategoryService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -24,7 +27,11 @@ import javax.annotation.Resource;
 @Service("attrService")
 public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements AttrService {
     @Resource
-    AttrAttrgroupRelationDao relationDao;
+    private AttrAttrgroupRelationDao relationDao;
+    @Resource
+    private AttrAttrgroupRelationService attrAttrgroupRelationService;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -78,6 +85,16 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         );
         PageUtils pageUtils = new PageUtils(page);
         return pageUtils;
+    }
+
+    @Override
+    public AttrEntity getByIdWithExInfo(Long attrId) {
+        Long attrGroupId = attrAttrgroupRelationService.getAttrGroupId(attrId);
+        AttrEntity entity = this.getById(attrId);
+        Long[] cascadedCategoryId = categoryService.getCascadedCategoryId(entity.getCategoryId());
+        entity.setAttrGroupId(attrGroupId);
+        entity.setCascadedCategoryId(cascadedCategoryId);
+        return entity;
     }
 
 }
