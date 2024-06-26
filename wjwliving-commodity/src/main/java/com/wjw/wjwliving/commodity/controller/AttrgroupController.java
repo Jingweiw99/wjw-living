@@ -2,6 +2,7 @@ package com.wjw.wjwliving.commodity.controller;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
@@ -9,6 +10,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.wjw.utils.PageUtils;
 import com.wjw.utils.R;
 import com.wjw.wjwliving.commodity.service.CategoryService;
+import com.wjw.wjwliving.commodity.vo.AttrGroupWithAttrsVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +36,7 @@ public class AttrgroupController {
     private AttrgroupService attrgroupService;
     @Autowired
     private CategoryService categoryService;
+
     /**
      * 列表
      */
@@ -102,4 +105,12 @@ public class AttrgroupController {
         return R.ok();
     }
 
+    /**
+     * 根据categoryId获取属性组带有属性
+     */
+    @RequestMapping("/{categoryId}/withattr")
+    public R getAttrGroupWithAttrs(@PathVariable("categoryId") Long categoryId) {
+        List<AttrGroupWithAttrsVo> data = attrgroupService.getAttrGroupWithAttrs(categoryId);
+        return R.ok().put("data", data);
+    }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.wjw.utils.PageUtils;
 import com.wjw.wjwliving.commodity.entity.AttrEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,5 +24,9 @@ public interface AttrService extends IService<AttrEntity> {
 
 
     AttrEntity getByIdWithExInfo(Long attrId);
+    /**
+     * 根据属性组id , 返回该属性组关联的商品属性(基本属性)
+     */
+    List<AttrEntity> getRelationAttr(Long attrgroupId);
 }
 

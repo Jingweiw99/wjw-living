@@ -10,7 +10,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -32,6 +35,8 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
     private AttrAttrgroupRelationService attrAttrgroupRelationService;
     @Autowired
     private CategoryService categoryService;
+    @Resource
+    private AttrAttrgroupRelationDao attrAttrgroupRelationDao;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -95,6 +100,25 @@ public class AttrServiceImpl extends ServiceImpl<AttrDao, AttrEntity> implements
         entity.setAttrGroupId(attrGroupId);
         entity.setCascadedCategoryId(cascadedCategoryId);
         return entity;
+    }
+
+    /**
+     * 根据属性组id , 返回该属性组关联的商品属性(基本属性)
+     */
+    @Override
+    public List<AttrEntity> getRelationAttr(Long attrgroupId) {
+        List<AttrAttrgroupRelationEntity> entities =
+                attrAttrgroupRelationDao.selectList(
+                        new QueryWrapper<AttrAttrgroupRelationEntity>().eq("attr_group_id", attrgroupId));
+        List<Long> attrIds = entities.stream().map((item) -> {
+            return item.getAttrId();
+        }).collect(Collectors.toList());
+        // 如果没有关联任何的基本属性，返回null
+        if (attrIds == null || attrIds.size() == 0) {
+            return null;
+        }
+        Collection<AttrEntity> attrEntities = this.listByIds(attrIds);
+        return (List<AttrEntity>) attrEntities;
     }
 
 }

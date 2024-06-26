@@ -2,8 +2,10 @@ package com.wjw.wjwliving.commodity.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wjw.utils.PageUtils;
+import com.wjw.wjwliving.commodity.entity.BrandEntity;
 import com.wjw.wjwliving.commodity.entity.CategoryBrandRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -18,5 +20,7 @@ public interface CategoryBrandRelationService extends IService<CategoryBrandRela
     PageUtils queryPage(Map<String, Object> params);
 
     void saveAll(CategoryBrandRelationEntity categoryBrandRelation);
+
+    List<BrandEntity> getInfoByCatId(Long categoryId);
 }
 

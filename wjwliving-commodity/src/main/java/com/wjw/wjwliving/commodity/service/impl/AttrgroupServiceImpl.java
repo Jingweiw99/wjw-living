@@ -2,11 +2,16 @@ package com.wjw.wjwliving.commodity.service.impl;
 
 import com.wjw.utils.PageUtils;
 import com.wjw.utils.Query;
+import com.wjw.wjwliving.commodity.entity.AttrEntity;
+import com.wjw.wjwliving.commodity.service.AttrService;
+import com.wjw.wjwliving.commodity.vo.AttrGroupWithAttrsVo;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -16,9 +21,13 @@ import com.wjw.wjwliving.commodity.dao.AttrgroupDao;
 import com.wjw.wjwliving.commodity.entity.AttrgroupEntity;
 import com.wjw.wjwliving.commodity.service.AttrgroupService;
 
+import javax.annotation.Resource;
+
 
 @Service("attrgroupService")
 public class AttrgroupServiceImpl extends ServiceImpl<AttrgroupDao, AttrgroupEntity> implements AttrgroupService {
+    @Resource
+    private AttrService attrService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -53,6 +62,20 @@ public class AttrgroupServiceImpl extends ServiceImpl<AttrgroupDao, AttrgroupEnt
                     this.page(new Query<AttrgroupEntity>().getPage(params), wrapper);
             return new PageUtils(page);
         }
+    }
+
+    @Override
+    public List<AttrGroupWithAttrsVo> getAttrGroupWithAttrs(Long categoryId) {
+        List<AttrgroupEntity> lists = this.list(new QueryWrapper<AttrgroupEntity>().eq("category_id", categoryId));
+        List<AttrGroupWithAttrsVo> results = lists.stream().map(attrgroup -> {
+            AttrGroupWithAttrsVo vo = new AttrGroupWithAttrsVo();
+            BeanUtils.copyProperties(attrgroup, vo);
+            Long id = attrgroup.getId();
+            List<AttrEntity> relationAttr = attrService.getRelationAttr(id);
+            vo.setAttrs(relationAttr);
+            return vo;
+        }).collect(Collectors.toList());
+        return results;
     }
 
 }

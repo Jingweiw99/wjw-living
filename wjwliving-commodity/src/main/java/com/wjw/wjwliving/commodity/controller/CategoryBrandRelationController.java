@@ -9,6 +9,7 @@ import com.wjw.utils.PageUtils;
 import com.wjw.utils.R;
 import com.wjw.wjwliving.commodity.dao.BrandDao;
 import com.wjw.wjwliving.commodity.dao.CategoryDao;
+import com.wjw.wjwliving.commodity.entity.BrandEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +53,14 @@ public class CategoryBrandRelationController {
         CategoryBrandRelationEntity categoryBrandRelation = categoryBrandRelationService.getById(id);
 
         return R.ok().put("categoryBrandRelation", categoryBrandRelation);
+    }
+    /**
+     * 根据category_id获取这个下面category_id对应品牌的的所有数据
+     */
+    @GetMapping("/brands/list")
+    public R getInfoByCatId(@RequestParam(value = "catId") Long categoryId) {
+        List<BrandEntity> categoryBrandRelationEntities =  categoryBrandRelationService.getInfoByCatId(categoryId);
+        return R.ok().put("data", categoryBrandRelationEntities);
     }
 
     /**
