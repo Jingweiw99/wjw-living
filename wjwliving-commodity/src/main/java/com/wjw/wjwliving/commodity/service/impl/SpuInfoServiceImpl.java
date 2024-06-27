@@ -53,13 +53,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
     /**
      * 整体的spu视图对象， 需要拆分为多个表，然后入库。
-     功能1： 保存spu基本信息
-     功能2： 保存spu图片描述信息
-     功能3： 保存spu图片集信息
-     功能4： 保存spu基本属性/规格参数
-     功能5： 保存sku的基本信息
-     功能6： 保存spu和sku的图片信息
-     功能7： 保存sku的销售属性
+     * 功能1： 保存spu基本信息
+     * 功能2： 保存spu图片描述信息
+     * 功能3： 保存spu图片集信息
+     * 功能4： 保存spu基本属性/规格参数
+     * 功能5： 保存sku的基本信息
+     * 功能6： 保存spu和sku的图片信息
+     * 功能7： 保存sku的销售属性
      *
      * @param spuSaveVO
      */
@@ -152,6 +152,48 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             });
         }
 
+    }
+
+    @Override
+    public PageUtils queryPageByCondition(Map<String, Object> params) {
+        QueryWrapper<SpuInfoEntity> wrapper = new QueryWrapper<>();
+        // 按检索条件-spu 名字
+        String key = (String) params.get("key");
+        if (!StringUtils.isEmpty(key)) {
+            wrapper.and((w) -> { // 业务规定id=key值或者搜索key模糊查询
+                w.eq("id", key).or().like("spu_name", key);
+            });
+        }
+        //加入发布状态
+        String status = (String) params.get("status");
+        if (!StringUtils.isEmpty(status)) {
+            wrapper.eq("publish_status", status);
+        }
+        //加入品牌 id
+        String brandId = (String) params.get("brandId");
+        if (!StringUtils.isEmpty(brandId) && !"0".equalsIgnoreCase(brandId)) {
+            wrapper.eq("brand_id", brandId);
+        }
+        //加入分类 id
+        String catelogId = (String) params.get("catelogId");
+        if (!StringUtils.isEmpty(catelogId) && !"0".equalsIgnoreCase(catelogId)) {
+            wrapper.eq("catalog_id", catelogId);
+        }
+        //分页查询
+        IPage<SpuInfoEntity> page = this.page(
+                new Query<SpuInfoEntity>().getPage(params), wrapper
+        );
+        return new PageUtils(page);
+    }
+
+    @Override
+    public void up(Long spuId) {
+        this.baseMapper.updaSpuStatus(spuId, 1);
+    }
+
+    @Override
+    public void down(Long spuId) {
+        this.baseMapper.updaSpuStatus(spuId, 2);
     }
 
     private void saveBaseSpuInfo(SpuInfoEntity spuInfoEntity) {

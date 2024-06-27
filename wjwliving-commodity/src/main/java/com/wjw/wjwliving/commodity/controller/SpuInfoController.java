@@ -7,11 +7,7 @@ import com.wjw.utils.PageUtils;
 import com.wjw.utils.R;
 import com.wjw.wjwliving.commodity.vo.SpuSaveVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.wjw.wjwliving.commodity.entity.SpuInfoEntity;
 import com.wjw.wjwliving.commodity.service.SpuInfoService;
@@ -37,9 +33,21 @@ public class SpuInfoController {
     @RequestMapping("/list")
 //    @RequiresPermissions("commodity:spuinfo:list")
     public R list(@RequestParam Map<String, Object> params){
-        PageUtils page = spuInfoService.queryPage(params);
-
+//        PageUtils page = spuInfoService.queryPage(params);
+        // 带有条件
+        PageUtils page = spuInfoService.queryPageByCondition(params);
         return R.ok().put("page", page);
+    }
+    @PostMapping(value = "/{spuId}/up")
+    public R spuUp(@PathVariable("spuId") Long spuId) {
+        spuInfoService.up(spuId);
+        return R.ok();
+    }
+    //商品下架
+    @PostMapping(value = "/{spuId}/down")
+    public R spuDown(@PathVariable("spuId") Long spuId) {
+        spuInfoService.down(spuId);
+        return R.ok();
     }
 
 
